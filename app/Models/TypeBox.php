@@ -10,4 +10,8 @@ class TypeBox extends Model
     use HasFactory;
     protected $table = 'types_boxes';
     protected $fillable = ['name'];
+
+    public function accounts() {
+        return $this->hasMany("App\Models\Account");
+    }
 }

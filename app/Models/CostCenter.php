@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class CostCenter extends Model
 {
+    protected $table = "costs_center";
+    protected $guarded = [''];
     use HasFactory;
-    protected $table = 'expenses';
-    protected $fillable =  ['name','code'];
 
     public function accounts() {
         return $this->hasMany("App\Models\Account");
     }
 }
-
