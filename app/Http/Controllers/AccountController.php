@@ -11,6 +11,7 @@ use App\Models\Expense;
 use App\Models\TypeBox;
 use App\Models\TypeDocument;
 
+
 class AccountController extends Controller
 {
 
@@ -43,8 +44,15 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
+        $account = $request->all();
+        $account_object = (object)$account;
+        $total = formater_value($account_object->total);
+        $account_object->total = $total;
+        $account = (array)$account_object;
+        return $account;
     }
+
+
 
     /**
      * Display the specified resource.
@@ -89,5 +97,9 @@ class AccountController extends Controller
     public function destroy(Account $account)
     {
         //
+    }
+
+    public function formater_value(Account $account){
+
     }
 }
