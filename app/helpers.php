@@ -12,7 +12,7 @@ function RemoveSpecialChar($str)
 {
     $str_minus = strtolower($str);
     $str_blank = trim($str_minus);
-    $res = preg_replace('/[a-z\$\@\.\;\" "]+/','', $str_blank);
+    $res = preg_replace('/[a-z\$\@\.\;\,\" "]+/','', $str_blank);
     return $res;
 }
 

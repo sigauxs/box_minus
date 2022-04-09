@@ -48,8 +48,11 @@ class AccountController extends Controller
         $account_object = (object)$account;
         $total = formater_value($account_object->total);
         $account_object->total = $total;
-        $account = (array)$account_object;
-        return $account;
+        $record = (array)$account_object;
+
+        $account =  Account::create($record);
+
+        return redirect()->route('accounts.show',$account);
     }
 
 
@@ -62,7 +65,11 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        //
+
+        $account = Account::find($account->id);
+        return  view('accounts.show',compact('account'));
+
+
     }
 
     /**

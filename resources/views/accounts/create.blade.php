@@ -149,18 +149,7 @@
 
   <script>
 
-$("#iva").on({
-  "focus": function(event) {
-    $(event.target).select();
-  },
-  "keyup": function(event) {
-    $(event.target).val(function(index, value) {
-      return value.replace(/\D/g, "")
-        .replace(/([0-9])([0-9]{3})$/, '$1.$2')
-        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
-    });
-  }
-});
+
 
 $("#subtotal").on({
   "focus": function(event) {
@@ -168,47 +157,93 @@ $("#subtotal").on({
   },
   "keyup": function(event) {
     $(event.target).val(function(index, value) {
-      return value.replace(/\D/g, "")
+
+       return value.replace(/\D/g, "")
         .replace(/([0-9])([0-9]{3})$/, '$1.$2')
         .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+
     });
+  },"change": function(event){
+    let subtotal =  document.querySelector('#subtotal').value.replace(/[$.,]/g,'');
+    let iva =  document.querySelector('#iva').value.replace(/[$.,]/g,'');
+    let total = validationChange(iva,subtotal);
+    console.log(typeof total);
+    document.querySelector('#total').value = change_output(total) ;
+
   }
+
+});
+
+$("#iva").on({
+  "focus": function(event) {
+    $(event.target).select();
+  },
+  "keyup": function(event) {
+    $(event.target).val(function(index, value) {
+
+       return value.replace(/\D/g, "")
+        .replace(/([0-9])([0-9]{3})$/, '$1.$2')
+        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+
+    });
+  },"change": function(event){
+    let subtotal =  document.querySelector('#subtotal').value.replace(/[$.,]/g,'');
+    let iva =  document.querySelector('#iva').value.replace(/[$.,]/g,'');
+    let total = validationChange(iva,subtotal);
+    document.querySelector('#total').value = change_output(total) ;
+
+  }
+
 });
 
 
 
-      $("#subtotal").keyup(function(){
-    value_subtotal = document.querySelector('#subtotal').value ;
-    value_iva = document.querySelector('#iva').value;
-    let total = validationChange(value_iva,value_subtotal);
-    document.querySelector('#total').value = cambio_input(String(total)) ;
+function change_output(value){
+      let output = value.replace(/\D/g, "")
+      let output_1 = output.replace(/([0-9])([0-9]{3})$/, '$1.$2');
+      let output_2 = output_1.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
 
-})
+      return output_2;
 
-$("#subtotal").keydown(function (e) {
-    valuesubtotal = document.querySelector('#subtotal').value;
-    if(valuesubtotal == "" || null){
-        valuesubtotal = 0;
-    }
-});
+}
 
 
 
 
-$("#iva").keyup(function(){
-    value_subtotal = document.querySelector('#subtotal').value;
-    value_iva = document.querySelector('#iva').value;
-    let total = validationChange(value_iva,value_subtotal);
-    document.querySelector('#total').value = cambio_input(String(total));
-    // ;
-})
+//       $("#subtotal").keyup(function(){
+//     value_subtotal = string_to_number(document.querySelector('#subtotal').value) ;
+//     value_iva = string_to_number(document.querySelector('#iva').value);
+//     console.log(value_iva);
+//     console.log(value_subtotal);
+//     let total = validationChange(value_iva,value_subtotal);
+//     document.querySelector('#total').value = cambio_input(String(total)) ;
 
-$("#iva").keydown(function (e) {
-    iva = document.querySelector('#iva').value;
-    if(iva == "" || null){
-        iva = 0;
-    }
-});
+// })
+
+// $("#subtotal").keydown(function (e) {
+//     valuesubtotal = document.querySelector('#subtotal').value;
+//     if(valuesubtotal == "" || null){
+//         valuesubtotal = 0;
+//     }
+// });
+
+
+
+
+// $("#iva").keyup(function(){
+//     value_subtotal = document.querySelector('#subtotal').value;
+//     value_iva = document.querySelector('#iva').value;
+//     let total = validationChange(value_iva,value_subtotal);
+//     document.querySelector('#total').value = cambio_input(String(total));
+//     // ;
+// })
+
+// $("#iva").keydown(function (e) {
+//     iva = document.querySelector('#iva').value;
+//     if(iva == "" || null){
+//         iva = 0;
+//     }
+// });
 
 const validationChange = (iva,subTotal) =>{
 
@@ -220,37 +255,23 @@ const validationChange = (iva,subTotal) =>{
         subTotal = 0;
     }
 
-   let value_iva = string_to_number(iva);
-   console.log({
-       tipo: typeof value_iva,
-       valor: value_iva
-   })
-   let value_subtotal = string_to_number(subTotal);
-   console.log(value_subtotal)
 
 
-    let calculado =  value_iva + value_subtotal ;
-console.log(calculado);
+console.log(iva)
+console.log(subtotal)
+    let calculado =  Number(iva) + Number(subTotal) ;
+
 if(calculado == 0){
     calculado = "";
 }
-    return calculado;
+
+    return String(calculado);
 
 
 }
 
-function cambio_input(value) {
-  let e =  value.replace(/\D/g, "")
-  let d = e.replace(/([0-9])([0-9]{3})$/, '$1.$2')
-  let h = d.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
-  return h
-}
 
-function string_to_number(value){
-    let valor = value;
-    valor.replace(/[$.,]/g,'');
-    return Number(valor);
-}
+
 
 
       </script>
